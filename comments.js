@@ -1,43 +1,28 @@
 // Create a web server
-// Create a comments route
-// Create a form to submit new comments
-// Create a list of comments
-// Create a form to delete comments
-
 const express = require('express');
-const path = require('path');
 const app = express();
-const port = 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
-
-let comments = [];
-
+// Create a route for GET /comments
 app.get('/comments', (req, res) => {
-    let commentsList = comments.map((comment, index) => {
-        return `<li>${comment} <form action="/comments" method="post"><button type="submit" name="delete" value="${index}">Delete</button></form></li>`;
-    }).join('');
-    res.send(`
-        <h1>Comments</h1>
-        <form action="/comments" method="post">
-            <label for="comment">New comment:</label>
-            <input type="text" name="comment">
-            <button type="submit">Submit</button>
-        </form>
-        <ul>${commentsList}</ul>
-    `);
+  res.send('This is a GET request for /comments');
 });
 
+// Create a route for POST /comments
 app.post('/comments', (req, res) => {
-    if (req.body.delete) {
-        comments.splice(req.body.delete, 1);
-    } else {
-        comments.push(req.body.comment);
-    }
-    res.redirect('/comments');
+  res.send('This is a POST request for /comments');
 });
 
-app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+// Create a route for PUT /comments
+app.put('/comments', (req, res) => {
+  res.send('This is a PUT request for /comments');
+});
+
+// Create a route for DELETE /comments
+app.delete('/comments', (req, res) => {
+  res.send('This is a DELETE request for /comments');
+});
+
+// Start the server on port 3000
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000/comments');
 });
